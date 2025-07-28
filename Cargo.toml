@@ -1,0 +1,34 @@
+[package]
+name = "smile_id"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nutcase <mauricee423@gmail.com>"]
+description = "Rust client for Smile ID's identity verification services across Africa"
+license = "MIT"
+
+repository = "https://github.com/nutcas3/smile-id-rust"
+readme = "README.md"
+keywords = ["identity", "verification", "kyc", "africa", "smile-id"]
+categories = ["api-bindings", "authentication"]
+
+[dependencies]
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.21"
+chrono = "0.4"
+async-trait = "0.1"
+tokio = { version = "1", features = ["full"], optional = true }
+url = "2.3"
+
+[features]
+default = ["async"]
+async = ["tokio"]
+blocking = []
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "1.0"

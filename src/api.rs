@@ -10,14 +10,14 @@ use crate::error::{Error, Result};
 use crate::models::{ApiResponse, JobStatusRequest, JobStatusResponse};
 
 #[derive(Debug, Clone)]
-pub struct ApiClient {
+pub struct ApiClient<'a> {
     client: Client,
     auth: Auth,
-    config: Config,
+    config: &'a Config,
 }
 
-impl ApiClient {
-    pub fn new(config: Config) -> Result<Self> {
+impl<'a> ApiClient<'a> {
+    pub fn new(config: &'a Config) -> Result<Self> {
         let client = ClientBuilder::new()
             .timeout(Duration::from_secs(config.timeout))
             .build()
@@ -103,13 +103,13 @@ pub mod blocking {
     use super::*;
 
     #[derive(Debug, Clone)]
-    pub struct ApiClient {
+    pub struct ApiClient<'a> {
         client: reqwest::blocking::Client,
         auth: Auth,
-        config: Config,
+        config: &Config,
     }
 
-    impl ApiClient {
+    impl<'a> ApiClient<'a> {
         pub fn new(config: Config) -> Result<Self> {
             let client = reqwest::blocking::ClientBuilder::new()
                 .timeout(Duration::from_secs(config.timeout))

@@ -5,15 +5,15 @@ use crate::error::Result;
 use crate::models::{ApiResponse, DocumentVerificationRequest};
 
 #[derive(Debug, Clone)]
-pub struct DocumentVerification {
-    client: ApiClient,
+pub struct DocumentVerification<'a> {
+    client: ApiClient<'a>,
 }
 
-impl DocumentVerification {
-    pub fn new(client: ApiClient) -> Self {
+impl<'a> DocumentVerification<'a> {
+    pub fn new(client: ApiClient<'a>) -> Self {
         Self { client }
     }
-    
+
     pub async fn verify(
         &self,
         document_type: impl Into<String>,
@@ -26,10 +26,10 @@ impl DocumentVerification {
             document_images,
             partner_params: None,
         };
-        
+
         let url = format!("{}/document_verification", self.client.base_url());
         let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request).await?;
-        
+
         Ok(response.data.job_id)
     }
 }
@@ -43,17 +43,17 @@ struct VerifyResponse {
 pub mod blocking {
     use super::*;
     use crate::api::blocking::ApiClient;
-    
+
     #[derive(Debug, Clone)]
-    pub struct DocumentVerification {
-        client: ApiClient,
+    pub struct DocumentVerification<'a> {
+        client: ApiClient<'a>,
     }
-    
-    impl DocumentVerification {
-        pub fn new(client: ApiClient) -> Self {
+
+    impl<'a> DocumentVerification<'a> {
+        pub fn new(client: ApiClient<'a>) -> Self {
             Self { client }
         }
-        
+
         pub fn verify(
             &self,
             document_type: impl Into<String>,
@@ -66,10 +66,10 @@ pub mod blocking {
                 document_images,
                 partner_params: None,
             };
-            
+
             let url = format!("{}/document_verification", self.client.base_url());
             let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request)?;
-            
+
             Ok(response.data.job_id)
         }
     }

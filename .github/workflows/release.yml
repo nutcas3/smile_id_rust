@@ -21,6 +21,12 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Check formatting
+        run: cargo fmt
+
+      - name: Check warnings
+        run: cargo clippy
+
       - name: Build release binary
         run: cargo build --release
 

@@ -6,15 +6,15 @@ use crate::models::{ApiResponse, BusinessVerificationRequest};
 
 /// Business Verification product
 #[derive(Debug, Clone)]
-pub struct BusinessVerification {
-    client: ApiClient,
+pub struct BusinessVerification<'a> {
+    client: ApiClient<'a>,
 }
 
-impl BusinessVerification {
-    pub fn new(client: ApiClient) -> Self {
+impl<'a> BusinessVerification<'a> {
+    pub fn new(client: ApiClient<'a>) -> Self {
         Self { client }
     }
-    
+
     pub async fn verify(
         &self,
         business_name: impl Into<String>,
@@ -27,10 +27,10 @@ impl BusinessVerification {
             country: country.into(),
             partner_params: None,
         };
-        
+
         let url = format!("{}/business_verification", self.client.base_url());
         let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request).await?;
-        
+
         Ok(response.data.job_id)
     }
 }
@@ -44,17 +44,17 @@ struct VerifyResponse {
 pub mod blocking {
     use super::*;
     use crate::api::blocking::ApiClient;
-    
+
     #[derive(Debug, Clone)]
-    pub struct BusinessVerification {
-        client: ApiClient,
+    pub struct BusinessVerification<'a> {
+        client: ApiClient<'a>,
     }
-    
-    impl BusinessVerification {
-        pub fn new(client: ApiClient) -> Self {
+
+    impl<'a> BusinessVerification<'a> {
+        pub fn new(client: ApiClient<'a>) -> Self {
             Self { client }
         }
-        
+
         pub fn verify(
             &self,
             business_name: impl Into<String>,
@@ -67,10 +67,10 @@ pub mod blocking {
                 country: country.into(),
                 partner_params: None,
             };
-            
+
             let url = format!("{}/business_verification", self.client.base_url());
             let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request)?;
-            
+
             Ok(response.data.job_id)
         }
     }

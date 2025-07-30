@@ -11,10 +11,7 @@ pub enum Error {
     Json(#[from] serde_json::Error),
 
     #[error("API error: {status_code} - {message}")]
-    Api {
-        status_code: u16,
-        message: String,
-    },
+    Api { status_code: u16, message: String },
 
     #[error("Authentication error: {0}")]
     Auth(String),

@@ -12,6 +12,7 @@ pub use config::Config;
 pub use error::{Error, Result};
 pub use models::*;
 pub use products::*;
+pub use utils::*;
 
 pub mod prelude {
     pub use crate::api::ApiClient;

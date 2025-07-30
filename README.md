@@ -43,7 +43,7 @@ let client = ApiClient::new(config).expect("Failed to create API client");
 use smile_id::products::BasicKyc;
 
 // Create a Basic KYC instance
-let basic_kyc = BasicKyc::new(client.clone());
+let basic_kyc = BasicKyc::new(&client());
 
 // Submit a Basic KYC verification request
 let job_id = basic_kyc.verify(
@@ -64,7 +64,7 @@ println!("Job ID: {}", job_id);
 use smile_id::products::EnhancedKyc;
 
 // Create an Enhanced KYC instance
-let enhanced_kyc = EnhancedKyc::new(client.clone());
+let enhanced_kyc = EnhancedKyc::new(&client());
 
 // Submit an Enhanced KYC verification request
 let job_id = enhanced_kyc.verify(
@@ -86,7 +86,7 @@ use smile_id::products::BiometricKyc;
 use smile_id::utils;
 
 // Create a Biometric KYC instance
-let biometric_kyc = BiometricKyc::new(client.clone());
+let biometric_kyc = BiometricKyc::new(&client());
 
 // Encode a selfie image as base64
 let selfie_image = utils::encode_image_file("path/to/selfie.jpg")
@@ -113,7 +113,7 @@ use smile_id::products::DocumentVerification;
 use smile_id::utils;
 
 // Create a Document Verification instance
-let document_verification = DocumentVerification::new(client.clone());
+let document_verification = DocumentVerification::new(&client());
 
 // Encode document images as base64
 let front_image = utils::encode_image_file("path/to/front.jpg")
@@ -138,7 +138,7 @@ use smile_id::products::SmartSelfieAuth;
 use smile_id::utils;
 
 // Create a SmartSelfie™ Authentication instance
-let smartselfie_auth = SmartSelfieAuth::new(client.clone());
+let smartselfie_auth = SmartSelfieAuth::new(&client());
 
 // Encode a selfie image as base64
 let selfie_image = utils::encode_image_file("path/to/selfie.jpg")
@@ -160,7 +160,7 @@ println!("Job ID: {}", job_id);
 use smile_id::products::BusinessVerification;
 
 // Create a Business Verification instance
-let business_verification = BusinessVerification::new(client.clone());
+let business_verification = BusinessVerification::new(&client());
 
 // Submit a Business Verification request
 let job_id = business_verification.verify(
@@ -204,7 +204,7 @@ let config = Config::new("your-api-key", "your-partner-id");
 let client = ApiClient::new(config).expect("Failed to create API client");
 
 // Create a blocking Basic KYC instance
-let basic_kyc = BasicKyc::new(client.clone());
+let basic_kyc = BasicKyc::new(&client());
 
 // Submit a Basic KYC verification request
 let job_id = basic_kyc.verify(

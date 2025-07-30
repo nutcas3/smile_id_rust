@@ -5,15 +5,15 @@ use crate::error::Result;
 use crate::models::{ApiResponse, BasicKycRequest};
 
 #[derive(Debug, Clone)]
-pub struct BasicKyc {
-    client: ApiClient,
+pub struct BasicKyc<'a> {
+    client: ApiClient<'a>,
 }
 
-impl BasicKyc {
-    pub fn new(client: ApiClient) -> Self {
+impl<'a> BasicKyc<'a> {
+    pub fn new(client: ApiClient<'a>) -> Self {
         Self { client }
     }
-    
+
     pub async fn verify(
         &self,
         id_type: impl Into<String>,
@@ -32,10 +32,10 @@ impl BasicKyc {
             dob,
             partner_params: None,
         };
-        
+
         let url = format!("{}/basic_kyc", self.client.base_url());
         let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request).await?;
-        
+
         Ok(response.data.job_id)
     }
 }
@@ -49,17 +49,17 @@ struct VerifyResponse {
 pub mod blocking {
     use super::*;
     use crate::api::blocking::ApiClient;
-    
+
     #[derive(Debug, Clone)]
-    pub struct BasicKyc {
-        client: ApiClient,
+    pub struct BasicKyc<'a> {
+        client: ApiClient<'a>,
     }
-    
-    impl BasicKyc {
-        pub fn new(client: ApiClient) -> Self {
+
+    impl<'a> BasicKyc<'a> {
+        pub fn new(client: ApiClient<'a>) -> Self {
             Self { client }
         }
-        
+
         pub fn verify(
             &self,
             id_type: impl Into<String>,
@@ -78,10 +78,10 @@ pub mod blocking {
                 dob,
                 partner_params: None,
             };
-            
+
             let url = format!("{}/basic_kyc", self.client.base_url());
             let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request)?;
-            
+
             Ok(response.data.job_id)
         }
     }

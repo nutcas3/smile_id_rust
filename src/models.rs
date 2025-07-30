@@ -3,7 +3,6 @@ use std::collections::HashMap;
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct ApiResponse<T> {
-
     pub status_code: u16,
     pub message: String,
 
@@ -51,7 +50,6 @@ pub struct JobHistoryItem {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct BasicKycRequest {
-
     pub id_type: String,
     pub id_number: String,
     pub country: String,
@@ -71,7 +69,6 @@ pub struct BasicKycRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct EnhancedKycRequest {
-
     pub id_type: String,
     pub id_number: String,
     pub country: String,
@@ -85,7 +82,6 @@ pub struct EnhancedKycRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct BiometricKycRequest {
-
     pub id_type: String,
     pub id_number: String,
     pub country: String,
@@ -100,7 +96,6 @@ pub struct BiometricKycRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct DocumentVerificationRequest {
-
     pub document_type: String,
     pub country: String,
     pub document_images: Vec<String>,
@@ -111,7 +106,6 @@ pub struct DocumentVerificationRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct SmartSelfieAuthRequest {
-
     pub user_id: String,
     pub job_id: String,
     pub selfie_image: String,
@@ -122,7 +116,6 @@ pub struct SmartSelfieAuthRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct BusinessVerificationRequest {
-
     pub business_name: String,
     pub registration_number: String,
     pub country: String,
@@ -133,7 +126,6 @@ pub struct BusinessVerificationRequest {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct JobStatusRequest {
-
     pub user_id: String,
     pub job_id: String,
 

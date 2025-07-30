@@ -5,16 +5,16 @@ use crate::error::Result;
 use crate::models::{ApiResponse, BiometricKycRequest};
 
 #[derive(Debug, Clone)]
-pub struct BiometricKyc {
-    client: ApiClient,
+pub struct BiometricKyc<'a> {
+    client: ApiClient<'a>,
 }
 
-impl BiometricKyc {
-    pub fn new(client: ApiClient) -> Self {
+impl<'a> BiometricKyc<'a> {
+    pub fn new(client: ApiClient<'a>) -> Self {
         Self { client }
     }
-    
-    
+
+    #[allow(clippy::too_many_arguments)]
     pub async fn verify(
         &self,
         id_type: impl Into<String>,
@@ -35,10 +35,10 @@ impl BiometricKyc {
             selfie_image: selfie_image.into(),
             partner_params: None,
         };
-        
+
         let url = format!("{}/biometric_kyc", self.client.base_url());
         let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request).await?;
-        
+
         Ok(response.data.job_id)
     }
 }
@@ -52,17 +52,17 @@ struct VerifyResponse {
 pub mod blocking {
     use super::*;
     use crate::api::blocking::ApiClient;
-    
+
     #[derive(Debug, Clone)]
-    pub struct BiometricKyc {
-        client: ApiClient,
+    pub struct BiometricKyc<'a> {
+        client: ApiClient<'a>,
     }
-    
-    impl BiometricKyc {
-        pub fn new(client: ApiClient) -> Self {
+
+    impl<'a> BiometricKyc<'a> {
+        pub fn new(client: ApiClient<'a>) -> Self {
             Self { client }
         }
-        
+
         pub fn verify(
             &self,
             id_type: impl Into<String>,
@@ -83,10 +83,10 @@ pub mod blocking {
                 selfie_image: selfie_image.into(),
                 partner_params: None,
             };
-            
+
             let url = format!("{}/biometric_kyc", self.client.base_url());
             let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request)?;
-            
+
             Ok(response.data.job_id)
         }
     }

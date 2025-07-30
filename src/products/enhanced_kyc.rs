@@ -5,15 +5,15 @@ use crate::error::Result;
 use crate::models::{ApiResponse, EnhancedKycRequest};
 
 #[derive(Debug, Clone)]
-pub struct EnhancedKyc {
-    client: ApiClient,
+pub struct EnhancedKyc<'a> {
+    client: ApiClient<'a>,
 }
 
-impl EnhancedKyc {
-    pub fn new(client: ApiClient) -> Self {
+impl<'a> EnhancedKyc<'a> {
+    pub fn new(client: ApiClient<'a>) -> Self {
         Self { client }
     }
-    
+
     pub async fn verify(
         &self,
         id_type: impl Into<String>,
@@ -32,10 +32,10 @@ impl EnhancedKyc {
             dob: dob.into(),
             partner_params: None,
         };
-        
+
         let url = format!("{}/enhanced_kyc", self.client.base_url());
         let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request).await?;
-        
+
         Ok(response.data.job_id)
     }
 }
@@ -49,17 +49,17 @@ struct VerifyResponse {
 pub mod blocking {
     use super::*;
     use crate::api::blocking::ApiClient;
-    
+
     #[derive(Debug, Clone)]
-    pub struct EnhancedKyc {
-        client: ApiClient,
+    pub struct EnhancedKyc<'a> {
+        client: ApiClient<'a>,
     }
-    
-    impl EnhancedKyc {
-        pub fn new(client: ApiClient) -> Self {
+
+    impl<'a> EnhancedKyc<'a> {
+        pub fn new(client: ApiClient<'a>) -> Self {
             Self { client }
         }
-        
+
         pub fn verify(
             &self,
             id_type: impl Into<String>,
@@ -78,10 +78,10 @@ pub mod blocking {
                 dob: dob.into(),
                 partner_params: None,
             };
-            
+
             let url = format!("{}/enhanced_kyc", self.client.base_url());
             let response: ApiResponse<VerifyResponse> = self.client.post(&url, &request)?;
-            
+
             Ok(response.data.job_id)
         }
     }

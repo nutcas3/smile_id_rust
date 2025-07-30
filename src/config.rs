@@ -17,17 +17,17 @@ impl Config {
             timeout: 30,
         }
     }
-    
+
     pub fn with_base_url(mut self, base_url: impl Into<String>) -> Self {
         self.base_url = base_url.into();
         self
     }
-    
+
     pub fn with_version(mut self, version: impl Into<String>) -> Self {
         self.version = version.into();
         self
     }
-    
+
     pub fn with_timeout(mut self, timeout: u64) -> Self {
         self.timeout = timeout;
         self
